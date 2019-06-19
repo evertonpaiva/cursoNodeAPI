@@ -1,0 +1,27 @@
+{
+  "name": "cursonodeapi",
+  "version": "1.0.0",
+  "description": "uma gateway para pagamentos atraves de recursos http",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evertonpaiva/cursoNodeAPI.git"
+  },
+  "keywords": [
+    "gateway",
+    "pagamentos",
+    "api"
+  ],
+  "author": "Everton Paiva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evertonpaiva/cursoNodeAPI/issues"
+  },
+  "homepage": "https://github.com/evertonpaiva/cursoNodeAPI#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
