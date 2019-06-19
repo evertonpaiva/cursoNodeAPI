@@ -1,0 +1,27 @@
+version: '2'
+services:
+    payfast-mysql:
+        image: mysql:5.7.26
+        restart: always
+        container_name: payfast-mysql
+        environment:
+            - MYSQL_RANDOM_ROOT_PASSWORD=yes
+            - MYSQL_USER=payfastuser
+            - MYSQL_PASSWORD=m3nlgpWseJ0
+            - MYSQL_DATABASE=payfast
+        volumes:
+            - ./mysql:/var/lib/mysql
+        ports:
+            - 3306:3306
+    payfast-phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        container_name: payfast-phpmyadmin
+        ports:
+            - "8085:80"
+        environment:
+            - PMA_HOST=payfast-mysql
+        links:
+            - payfast-mysql
+        depends_on:
+          - payfast-mysql
