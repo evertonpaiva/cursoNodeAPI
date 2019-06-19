@@ -5,9 +5,13 @@ module.exports = function (app) {
     });
 
     app.post('/pagamentos/pagamento', function(req, res){
-       const pagamento = req.body;
-       console.log(pagamento);
-       res.send('OK');
+       var pagamento = req.body;
+       console.log('Processando uma requisição de um novo pagamento');
+
+       pagamento.status = 'CRIADO';
+       pagamento.data = new Date();
+
+       res.send(pagamento);
     });
 };
 
