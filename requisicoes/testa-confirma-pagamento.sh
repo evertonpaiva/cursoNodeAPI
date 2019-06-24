@@ -4,9 +4,7 @@ clear
 
 echo -e "\nTestando confirmação de novo pagamento:"
 
-curl http://localhost:3000/pagamentos/pagamento/11 \
+curl http://localhost:3000/pagamentos/pagamento/12 \
     -X PUT \
     -v \
-    -H "Content-type: application/json" \
-    -d @../files/pagamento.json\
     | json_pp
