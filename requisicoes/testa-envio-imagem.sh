@@ -9,4 +9,5 @@ curl http://localhost:3000/upload/imagem \
     -v \
     --data-binary @../util/imagem.jpg \
     -H "Content-type: application/octet-stream" \
+    -H "filename: imagem.jpg" \
     | json_pp
