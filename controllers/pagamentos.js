@@ -1,4 +1,8 @@
 module.exports = function (app) {
+    const PAGAMENTO_CRIADO = "CRIADO";
+    const PAGAMENTO_CONFIRMADO = "CONFIRMADO";
+    const PAGAMENTO_CANCELADO = "CANCELADO";
+
     app.get('/pagamentos', function(req, res){
         console.log('Teste');
         res.send('OK');
@@ -9,7 +13,7 @@ module.exports = function (app) {
         var id = req.params.id;
 
         pagamento.id = id;
-        pagamento.status = 'CANCELADO';
+        pagamento.status = PAGAMENTO_CANCELADO;
 
         const connection = app.persistencia.connectionFactory();
         const pagamentoDao = new app.persistencia.PagamentoDao(connection);
@@ -31,7 +35,7 @@ module.exports = function (app) {
         var id = req.params.id;
 
         pagamento.id = id;
-        pagamento.status = 'CONFIRMADO';
+        pagamento.status = PAGAMENTO_CONFIRMADO;
 
         const connection = app.persistencia.connectionFactory();
         const pagamentoDao = new app.persistencia.PagamentoDao(connection);
@@ -71,7 +75,7 @@ module.exports = function (app) {
         }
         console.log('processando pagamento...');
 
-       pagamento.status = 'CRIADO';
+       pagamento.status = PAGAMENTO_CRIADO;
        pagamento.data = new Date();
 
        const connection = app.persistencia.connectionFactory();
