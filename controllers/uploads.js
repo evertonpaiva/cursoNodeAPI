@@ -7,6 +7,11 @@ module.exports = function(app){
 
         var filename = req.headers.filename;
 
-        req.pipe(fs.createWriteStream('files/' + filename));
+        req.pipe(fs.createWriteStream('files/' + filename))
+            .on('finish', function(){
+               console.log('arquivo escrito');
+               res.status(201).send('{"resposta":"ok"}');
+            });
+
     });
 };
