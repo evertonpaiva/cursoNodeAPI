@@ -18,13 +18,14 @@ module.exports = function(app) {
         res.status(400).send(errors);
         return;
       }
+
       cartao.status = 'AUTORIZADO';
 
       var response = {
         dados_do_cartao: cartao,
-      }
+      };
 
       res.status(201).json(response);
       return;
   });
-}
+};

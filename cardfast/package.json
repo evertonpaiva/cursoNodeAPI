@@ -12,7 +12,6 @@
     "body-parser": "^1.15.2",
     "consign": "^0.1.2",
     "express": "^4.14.0",
-    "express-validator": "^2.20.8",
-    "restify": "^8.3.3"
+    "express-validator": "^2.20.8"
   }
 }
