@@ -12,16 +12,26 @@ module.exports = function (app) {
         var id = req.params.id;
         console.log('consultando pagamento: ' + id);
 
-        const connection = app.persistencia.connectionFactory();
-        const pagamentoDao = new app.persistencia.PagamentoDao(connection);
+        const memcachedClient = app.servicos.memcachedClient();
+        memcachedClient.get('pagamento-' + id, function (erro, retorno) {
+            if(erro || !retorno){
+                console.log('MISS - chave não encontrada');
 
-        pagamentoDao.buscaPorId(id, function(erro, resultado){
-            if(erro){
-                console.log('erro ao consultar no banco: ' + erro);
-                res.status(500).send(erro);
+                const connection = app.persistencia.connectionFactory();
+                const pagamentoDao = new app.persistencia.PagamentoDao(connection);
+
+                pagamentoDao.buscaPorId(id, function(erro, resultado){
+                    if(erro){
+                        console.log('erro ao consultar no banco: ' + erro);
+                        res.status(500).send(erro);
+                    }
+                    console.log('pagamento encontrado: ' + JSON.stringify(resultado));
+                    res.json(resultado);
+                });
+            } else {
+                console.log('HIT - valor: ' + JSON.stringify(retorno));
+                res.json(retorno);
             }
-            console.log('pagamento encontrado: ' + JSON.stringify(resultado));
-            res.json(resultado);
         });
     });
 
@@ -105,6 +115,16 @@ module.exports = function (app) {
            } else {
                pagamento.id = resultado.insertId;
                console.log('pagamento criado');
+
+               var memcachedClient = app.servicos.memcachedClient();
+               memcachedClient.set(
+                   'pagamento-' + pagamento.id,
+                   pagamento,
+                   60000,
+                   function(erro){
+                        console.log('nova chave adicionada ao cache: pagamento-' + pagamento.id);
+                   }
+               );
 
                if (pagamento.forma_de_pagamento == 'cartao') {
                    var cartao = req.body["cartao"];
