@@ -1,6 +1,6 @@
 const winston = require('winston');
 
-const logger = new winston.Logger({
+module.exports = new winston.Logger({
     transports: [
         new winston.transports.File({
             level: "info",
@@ -10,7 +10,3 @@ const logger = new winston.Logger({
         })
     ]
 });
-
-logger.log('Log utilizando o winston');
-logger.log('info', 'Log do nível info');
-logger.info('Log usando info diretamente');
